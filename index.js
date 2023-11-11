@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
@@ -34,8 +34,8 @@ app.use("/order", Orouter);
 app.use("/admin", Arouter);
 
 // serve frontend
-app.use(express.static(path.join(__dirname, "./client/dist/")));
+app.use(express.static('public'))
 
-app.get("*", (req,res) => {
-  res.sendFile(path.join(__dirname, "./client/dist/index.html"));
-});
+app.get('*', (req, res) => {
+  res.sendFile('index.html', {root: path.join(__dirname, 'public')});
+})
